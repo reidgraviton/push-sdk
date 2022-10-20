@@ -1,0 +1,1 @@
+export { fetchInboxApi as getInbox } from './getInbox'
