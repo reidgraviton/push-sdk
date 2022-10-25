@@ -8,5 +8,6 @@ export const EVENTS = {
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
   USER_FEEDS: 'userFeeds',
-  USER_SPAM_FEEDS: 'userSpamFeeds'
+  USER_SPAM_FEEDS: 'userSpamFeeds',
+  GET_CHAT_MESSAGES: 'getChatMessages'
 };
