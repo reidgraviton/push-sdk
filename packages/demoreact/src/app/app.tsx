@@ -7,7 +7,7 @@ import { Checkbox } from './components/Checkbox';
 import Dropdown from './components/Dropdown';
 import { Web3Context, EnvContext, SocketContext } from './context';
 import { useSDKSocket } from './hooks';
-import { ReactComponent as PushLogo }  from '../assets/pushLogo.svg';
+import { ReactComponent as PushLogo } from '../assets/pushLogo.svg';
 import NotificationsTest from './NotificationsTest';
 import SecretNotificationsTest from './SecretNotificationsTest';
 import ChannelsTest from './ChannelsTest';
@@ -98,16 +98,16 @@ const NavMenu = styled.div`
 `
 
 
-const checkForWeb3Data = ({ library, active, account, chainId  } : Web3ReactState) => {
+const checkForWeb3Data = ({ library, active, account, chainId }: Web3ReactState) => {
   return library && active && account && chainId;
 }
 
 export function App() {
-  const web3Data : Web3ReactState = useWeb3React();
+  const web3Data: Web3ReactState = useWeb3React();
 
-  const [env, setEnv] = useState('prod');
+  const [env, setEnv] = useState<'dev' | 'staging' | 'prod'>('prod');
   const [isCAIP, setIsCAIP] = useState(false);
- 
+
   const socketData = useSDKSocket({
     account: web3Data.account,
     chainId: web3Data.chainId,
@@ -126,7 +126,7 @@ export function App() {
   return (
     <StyledApp>
       <Link className='homeLink' to="/">
-        <PushLogo style={{ marginRight: 12 }}/>
+        <PushLogo style={{ marginRight: 12 }} />
         <h1>SDK Demo React App</h1>
       </Link>
 
@@ -146,61 +146,61 @@ export function App() {
       <div style={{ marginTop: 10 }}>
         <Checkbox id="isCAIP" label="Convert to CAIP" value={isCAIP} onChange={onChangeCAIP} />
       </div>
-      
+
 
       <hr />
       <EnvContext.Provider value={{ env, isCAIP }}>
-      {checkForWeb3Data(web3Data) ? (
-        <Web3Context.Provider value={web3Data}>
-          <SocketContext.Provider value={socketData}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <NavMenu>
-                    <Link to="/notifications" className='nav-button'>NOTIFICATIONS</Link>
-                    <Link to="/secret" className='nav-button'>SECRET NOTIFICATION</Link>
-                    <Link to="/channels" className='nav-button'>CHANNELS</Link>
-                    <Link to="/payloads" className='nav-button'>PAYLOADS</Link>
-                    <Link to="/socket" className='nav-button'>SOCKET</Link>
-                    <Link to="/embed" className='nav-button'>EMBDED</Link>
-                  </NavMenu>
-                }
-              />
-              <Route
-                path="/notifications"
-                element={<NotificationsTest />}
-              />
-              <Route
-                path="/secret"
-                element={<SecretNotificationsTest />}
-              />
-          
-              <Route
-                path="/channels"
-                element={<ChannelsTest />}
-              />
+        {checkForWeb3Data(web3Data) ? (
+          <Web3Context.Provider value={web3Data}>
+            <SocketContext.Provider value={socketData}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <NavMenu>
+                      <Link to="/notifications" className='nav-button'>NOTIFICATIONS</Link>
+                      <Link to="/secret" className='nav-button'>SECRET NOTIFICATION</Link>
+                      <Link to="/channels" className='nav-button'>CHANNELS</Link>
+                      <Link to="/payloads" className='nav-button'>PAYLOADS</Link>
+                      <Link to="/socket" className='nav-button'>SOCKET</Link>
+                      <Link to="/embed" className='nav-button'>EMBDED</Link>
+                    </NavMenu>
+                  }
+                />
+                <Route
+                  path="/notifications"
+                  element={<NotificationsTest />}
+                />
+                <Route
+                  path="/secret"
+                  element={<SecretNotificationsTest />}
+                />
 
-              <Route
-                path="/payloads"
-                element={<PayloadsTest />}
-              />
+                <Route
+                  path="/channels"
+                  element={<ChannelsTest />}
+                />
 
-              <Route
-                path="/socket"
-                element={<SocketTest />}
-              />
+                <Route
+                  path="/payloads"
+                  element={<PayloadsTest />}
+                />
 
-              <Route
-                path="/embed"
-                element={<EmbedTest />}
-              />
-            </Routes>
-          </SocketContext.Provider>
-        </Web3Context.Provider>
-      ) : null}
+                <Route
+                  path="/socket"
+                  element={<SocketTest />}
+                />
+
+                <Route
+                  path="/embed"
+                  element={<EmbedTest />}
+                />
+              </Routes>
+            </SocketContext.Provider>
+          </Web3Context.Provider>
+        ) : null}
       </EnvContext.Provider>
-      
+
     </StyledApp>
   );
 }

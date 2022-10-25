@@ -8,13 +8,13 @@ import { getCAIPAddress } from '../helpers';
 
 export type SDKSocketHookOptions = {
   account?: string | null,
-  env?: string,
+  env?: 'dev' | 'staging' | 'prod',
   chainId?: number,
   isCAIP?: boolean
 };
 
-export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHookOptions) => {
-  
+export const useSDKSocket = ({ account, env = 'prod', chainId, isCAIP }: SDKSocketHookOptions) => {
+
   const [epnsSDKSocket, setEpnsSDKSocket] = useState<any>(null);
   const [feedsSinceLastConnection, setFeedsSinceLastConnection] = useState<any>([]);
   const [isSDKSocketConnected, setIsSDKSocketConnected] = useState(epnsSDKSocket?.connected);
@@ -60,13 +60,13 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
     if (epnsSDKSocket) {
       addSocketEvents();
     }
-  
+
     return () => {
       if (epnsSDKSocket) {
         removeSocketEvents();
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [epnsSDKSocket]);
 
 
@@ -81,7 +81,7 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
         // console.log('=================>>> disconnection in the hook');
         epnsSDKSocket?.disconnect();
       }
-      
+
       const connectionObject = createSocketConnection({
         user: getCAIPAddress(env, account, 'User'),
         env,
@@ -91,14 +91,14 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
       // set to context
       setEpnsSDKSocket(connectionObject);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, env, chainId, isCAIP]);
 
 
   return {
-      epnsSDKSocket,
-      isSDKSocketConnected,
-      feedsSinceLastConnection,
-      lastConnectionTimestamp
+    epnsSDKSocket,
+    isSDKSocketConnected,
+    feedsSinceLastConnection,
+    lastConnectionTimestamp
   }
 };
