@@ -1,8 +1,13 @@
 export type SocketInputOptions = {
   user: string,
   env: string,
-  socketOptions?: any
+  socketOptions?: SocketOptions
 };
+
+export type SocketOptions = {
+  autoConnect: boolean,
+  reconnectionAttempts: number
+}
 
 /**
  * TODO define types for 
@@ -13,4 +18,3 @@ export type SocketInputOptions = {
  * 
  * like https://socket.io/docs/v4/typescript/
  */
-  
