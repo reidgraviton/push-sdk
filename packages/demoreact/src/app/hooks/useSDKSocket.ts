@@ -7,9 +7,9 @@ import {
 import { getCAIPAddress } from '../helpers';
 
 export type SDKSocketHookOptions = {
-  account?: string | null,
-  env?: 'dev' | 'staging' | 'prod',
-  chainId?: number,
+  account: string,
+  env: 'dev' | 'staging' | 'prod',
+  chainId: number,
   isCAIP?: boolean
 };
 
