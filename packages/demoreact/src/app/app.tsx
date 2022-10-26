@@ -109,8 +109,8 @@ export function App() {
   const [isCAIP, setIsCAIP] = useState(false);
 
   const socketData = useSDKSocket({
-    account: web3Data.account,
-    chainId: web3Data.chainId,
+    account: web3Data.account!,
+    chainId: web3Data.chainId!,
     env,
     isCAIP,
   })
