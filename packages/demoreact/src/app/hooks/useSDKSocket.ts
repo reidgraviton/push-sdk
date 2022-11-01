@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
   createSocketConnection,
-  EVENTS
+  EVENTS,
+  Message
 } from '@pushprotocol/socket';
 
 import { getCAIPAddress } from '../helpers';
@@ -14,7 +15,7 @@ export type SDKSocketHookOptions = {
 };
 
 export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHookOptions) => {
-  
+
   const [epnsSDKSocket, setEpnsSDKSocket] = useState<any>(null);
   const [feedsSinceLastConnection, setFeedsSinceLastConnection] = useState<any>([]);
   const [isSDKSocketConnected, setIsSDKSocketConnected] = useState(epnsSDKSocket?.connected);
@@ -47,6 +48,11 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
         return [...oldFeeds, feed]
       });
     });
+
+    epnsSDKSocket?.on(EVENTS.W2W_RECEIVED_MESSAGE, (messages: any) => {
+      console.log('MESSAGE ARRIVED')
+      console.log(JSON.stringify(messages))
+    })
   };
 
   const removeSocketEvents = () => {
@@ -60,13 +66,13 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
     if (epnsSDKSocket) {
       addSocketEvents();
     }
-  
+
     return () => {
       if (epnsSDKSocket) {
         removeSocketEvents();
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [epnsSDKSocket]);
 
 
@@ -81,24 +87,25 @@ export const useSDKSocket = ({ account, env = '', chainId, isCAIP }: SDKSocketHo
         // console.log('=================>>> disconnection in the hook');
         epnsSDKSocket?.disconnect();
       }
-      
+
       const connectionObject = createSocketConnection({
         user: getCAIPAddress(env, account, 'User'),
         env,
+        isChat: true,
         socketOptions: { autoConnect: false }
       });
       console.warn('new connection object: ', connectionObject);
       // set to context
       setEpnsSDKSocket(connectionObject);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, env, chainId, isCAIP]);
 
 
   return {
-      epnsSDKSocket,
-      isSDKSocketConnected,
-      feedsSinceLastConnection,
-      lastConnectionTimestamp
+    epnsSDKSocket,
+    isSDKSocketConnected,
+    feedsSinceLastConnection,
+    lastConnectionTimestamp
   }
 };
