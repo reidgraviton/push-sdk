@@ -91,7 +91,7 @@ export class ChatSDK {
    * @param pgpPrivateKey Your PGP Private Key
    * @returns 
    */
-  async initialize(env: Environment, account: string, pgpPublicKey: string, pgpPrivateKey: string): Promise<ChatSDK> {
+  async initialize(env: Environment, account: string, pgpPrivateKey: string): Promise<ChatSDK> {
     const connectedUser = await getConnectedUser(account, pgpPrivateKey, env.toString());
     return new ChatSDK(env, account, connectedUser)
   }
