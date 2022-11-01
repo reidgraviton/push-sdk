@@ -87,7 +87,6 @@ export class ChatSDK {
    * Initialize the Chat SDK
    * @param env Environment of the sdk: dev, staging or production
    * @param account Your address
-   * @param pgpPublicKey Your PGP Public Key
    * @param pgpPrivateKey Your PGP Private Key
    * @returns 
    */
@@ -98,7 +97,6 @@ export class ChatSDK {
 
   /**
    * Send your first message to an address
-   * @param connectedUser Your user information
    * @param messageContent Content of your message
    * @param messageType Type of your messages
    * @param receiverAddress Receiver of your message
@@ -129,7 +127,6 @@ export class ChatSDK {
 
   /**
    * Send a message to an address
-   * @param connectedUser Your user information
    * @param messageContent Content of your message
    * @param messageType Type of your messages
    * @param receiverAddress Receiver of your message
