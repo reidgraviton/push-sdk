@@ -127,6 +127,13 @@ export class ChatSDK {
     }
   }
 
+  /**
+   * Send a message to an address
+   * @param connectedUser Your user information
+   * @param messageContent Content of your message
+   * @param messageType Type of your messages
+   * @param receiverAddress Receiver of your message
+   */
   async sendMessage(connectedUser: IConnectedUser, messageContent: string, messageType: MessageType, receiverAddress: string): Promise<void> {
     const { message, encryptionType, aesEncryptedSecret, signature } = (await getEncryptedRequest(receiverAddress, connectedUser, messageContent, this._env.toString())) || {};
     const payload: WebSocketPayload<Message> = {
@@ -146,6 +153,11 @@ export class ChatSDK {
     this._socket.emit(EVENTS.W2W_CREATE_INTENT, { payload })
   }
 
+  /**
+   * Approve requests
+   * @param status Approve
+   * @param senderAddress Address you want to approve the Request
+   */
   async updateIntent(status: 'Approve', senderAddress: string): Promise<void> {
     const [signature, sigType] = ['1', 'sigType']
     const payload: WebSocketPayload<UpdateIntent> = {
