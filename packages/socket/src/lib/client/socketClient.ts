@@ -84,7 +84,7 @@ export class ChatSDK {
   }
 
   /**
-   * 
+   * Initialize the Chat SDK
    * @param env Environment of the sdk: dev, staging or production
    * @param account Your address
    * @param pgpPublicKey Your PGP Public Key
