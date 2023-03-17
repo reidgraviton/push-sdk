@@ -1673,10 +1673,10 @@ Allowed Options (params with * are mandatory)
 const user = await PushAPI.user.get(account: 'eip155:0xFe6C8E9e25f7bcF374412c5C81B2578aC473C0F7', env: 'staging');
   
 // actual api
-const decryptedPvtKey = await PushAPI.chat.decryptPGPKey(
+const decryptedPvtKey = await PushAPI.chat.decryptPGPKey({
     encryptedPGPPrivateKey: user.encryptedPrivateKey,
     signer: _signer
-);
+});
 ```
 
 <details>
